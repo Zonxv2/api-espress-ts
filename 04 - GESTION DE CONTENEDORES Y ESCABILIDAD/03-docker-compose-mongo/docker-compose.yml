@@ -1,0 +1,8 @@
+version: "2.20.3"
+services:
+  mongo_docker:
+    image: mongo:latest
+    ports: 
+      - "27018:27017"
+    volumes:
+      - "/d/DOCKER/MONGO/mongo_backup:/data/db"

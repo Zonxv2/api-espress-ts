@@ -1,0 +1,129 @@
+paths:
+  /products:
+    post:
+      tags: 
+      - Products
+      summary: Registro de producto en base de datos.  
+      requestBody:  
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/parameters/schemas/ProductInput'
+        required: true
+      responses:  
+        201:
+          description: Se registró el producto correctamente.
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schema/Products/ProductResponse'
+        404:
+          description: No se encuentran productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/NotFound'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/Error'
+
+    get:
+      tags: 
+      - Products
+      summary: Lista de productos en base de datos.
+      responses:
+        200:
+          description: Lista de productos.
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/ProductList'
+        404:
+          description: No se encuentran productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/NotFound'
+  /products/{id}:
+    get:
+      tags:
+      - Products
+      summary: Listar productos por id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: id referente al producto.
+          schema:
+            type: string
+      responses:
+        200:
+          description: producto encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/Product'
+        404:
+            description: No se encuentra producto con id {id}
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schema/Products/Error'
+
+    put:
+      tags:
+      - Products
+      summary: Editar producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: string id required
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/ProductInput'
+        required: true
+      responses:
+          200:
+            description: Noticia actualizada
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schema/Products/Product'
+          404:
+            description: No se encuentra noticia con id {id}
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schema/Products/Error'         
+    delete:
+      tags:
+      - Products
+      summary: Eliminar producto por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: string id required
+          schema:
+            type: string
+      responses:
+        200:
+          description: producto eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/Product'
+        404:
+          description: No se encuentra producto con id {id}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/Error'
